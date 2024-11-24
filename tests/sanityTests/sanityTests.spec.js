@@ -4,22 +4,19 @@ import {
   inventoryURL,
   itemTitleLink,
   cartBadge,
-  bagToCart,
-  jacketToCart,
   cartIconLink,
-  itemQuantity,
   checkOut2URL,
   finishURL,
-  thankYouText,
-  orderDispatch,
   itemsToCart,
   quantityElement,
   checkOut1URL,
   deliveryInfo,
-} from "../Variables";
+  usernameList,
+  password,
+  finishedOrder,
+} from "../utils/testData";
 
 import {
-  firstLogin,
   assertInventoryURL,
   verifyProductName,
   addItemsToCart,
@@ -29,18 +26,16 @@ import {
   fillDeliveryInfo,
   assertOverviewPage,
   assertFinalPage,
-} from "../Helpers";
+} from "../utils/Helpers";
+
+import { logIn } from "../utils/testActions";
 
 test.describe("sanityTest", () => {
+  test.beforeEach("login", async ({ page }) => {
+    await logIn(page, swagLabsURL, usernameList[0], password);
+  });
 
-  test.beforeEach("login", async ({page}) =>{
-    await firstLogin(page, swagLabsURL)
-  })
-   
   test("End to end purchasing process", async ({ page }) => {
-    //Navigate to site and log in using valid credentials
-    await firstLogin(page, swagLabsURL);
-
     //Assert site URL after log in
     await assertInventoryURL(page, inventoryURL);
 
@@ -64,8 +59,8 @@ test.describe("sanityTest", () => {
 
     // //Proceed to overview page and assert site URL and title
     await assertOverviewPage(page, checkOut2URL);
-    // //Proceed to final page, assert URL, title, header and text
+    //     // //Proceed to final page, assert URL, title, header and text
 
-    await assertFinalPage(page, finishURL);
+    await assertFinalPage(page, finishURL, finishedOrder);
   });
 });

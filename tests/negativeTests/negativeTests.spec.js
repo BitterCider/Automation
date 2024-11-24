@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { swagLabsURL, errorElement, userObjects } from "../Variables";
+import { swagLabsURL, errorElement, userObjects } from "../utils/testData";
+import { logIn } from "../utils/testActions";
 
 test.describe("negativeTests", () => {
   for (let user of userObjects) {
@@ -8,10 +9,7 @@ test.describe("negativeTests", () => {
     }, ${user.password === "" ? "Empty password" : user.password}`, async ({
       page,
     }) => {
-      await page.goto(swagLabsURL);
-      await page.locator("#user-name").fill(user.userName);
-      await page.locator("#password").fill(user.password);
-      await page.locator("#login-button").click();
+      logIn(page, swagLabsURL, user.userName, user.password);
       await expect(page.locator(errorElement)).toContainText(/Epic sadface/);
     });
   }

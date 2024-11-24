@@ -4,17 +4,15 @@ import {
   swagLabsURL,
   usernameList,
   inventoryURL,
-} from "../Variables";
+} from "../utils/testData";
+import { logIn } from "../utils/testActions";
 
 test.describe("positiveTests", () => {
   for (let username of usernameList) {
     test(`Validiate userdata logins:${username}, ${password}`, async ({
       page,
     }) => {
-      await page.goto(swagLabsURL);
-      await page.locator("#user-name").fill(username);
-      await page.locator("#password").fill(password);
-      await page.locator("#login-button").click();
+      await logIn(page, swagLabsURL, username, password);
       await expect(page).toHaveURL(inventoryURL);
     });
   }

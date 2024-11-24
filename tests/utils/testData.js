@@ -6,25 +6,24 @@ export const checkOut2URL = "https://www.saucedemo.com/checkout-step-two.html";
 export const finishURL = "https://www.saucedemo.com/checkout-complete.html";
 
 //Text Assertions
-export const checkoutComplete = "Checkout: Complete!";
-export const orderDispatch =
-  "Your order has been dispatched, and will arrive just as fast as the pony can get there!";
-export const thankYouText = "Thank you for your order!";
+export const finishedOrder = [
+  {element: ".title", message: "Checkout: Complete!"},
+  {element: ".complete-text", message: "Your order has been dispatched, and will arrive just as fast as the pony can get there!"},
+  {element: ".complete-header", message: "Thank you for your order!"}
+];
+
 
 //HTML elements:
 export const errorElement = ".error-message-container";
 export const itemTitleLink = [
   { Link: '[data-test="item-4-title-link"]', Title: "Sauce Labs Backpack" },
   {
-    Link: '[data-test="item-5-title-link"]',
-    Title: "Sauce Labs Fleece Jacket",
+    Link: '[data-test="item-2-title-link"]',
+    Title: "Sauce Labs Onesie",
   },
 ];
 export const cartBadge = '[data-test="shopping-cart-badge"]';
-export const itemsToCart = [
-  "#add-to-cart-sauce-labs-backpack",
-  "#add-to-cart-sauce-labs-fleece-jacket",
-];
+export const itemsToCart = ["#add-to-cart-sauce-labs-backpack", "#add-to-cart-sauce-labs-onesie"]
 export const cartIconLink = '[data-test="shopping-cart-link"]';
 export const quantityElement = '[data-test="item-quantity"]';
 

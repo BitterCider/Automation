@@ -18,40 +18,54 @@ import {
   deliveryInfo,
 } from "../Variables";
 
-import { firstLogin, assertInventoryURL, verifyProductName, addItemsToCart, assertCartBadge, assertCartQuantity, assertCheckoutTitle, fillDeliveryInfo, assertOverviewPage, assertFinalPage } from "../Helpers";
+import {
+  firstLogin,
+  assertInventoryURL,
+  verifyProductName,
+  addItemsToCart,
+  assertCartBadge,
+  assertCartQuantity,
+  assertCheckoutTitle,
+  fillDeliveryInfo,
+  assertOverviewPage,
+  assertFinalPage,
+} from "../Helpers";
 
 test.describe("sanityTest", () => {
 
-  test("End to end purchasing process", async ({ page }) => {
-
-  //Navigate to site and log in using valid credentials
+  test.beforeEach("login", async ({page}) =>{
     await firstLogin(page, swagLabsURL)
+  })
+   
+  test("End to end purchasing process", async ({ page }) => {
+    //Navigate to site and log in using valid credentials
+    await firstLogin(page, swagLabsURL);
 
-  //Assert site URL after log in
-    await assertInventoryURL(page, inventoryURL)
+    //Assert site URL after log in
+    await assertInventoryURL(page, inventoryURL);
 
-  //Assert products name
-    await verifyProductName(page, itemTitleLink)
+    //Assert products name
+    await verifyProductName(page, itemTitleLink);
 
-  // Add backpack and jacket to shopping cart and assert their names
-    await addItemsToCart(page, itemsToCart)
+    // Add backpack and jacket to shopping cart and assert their names
+    await addItemsToCart(page, itemsToCart);
 
-  // Assert cart badge represents number of items added
-    await assertCartBadge(page, cartBadge)
+    // Assert cart badge represents number of items added
+    await assertCartBadge(page, cartBadge);
 
-  // Navigate to shopping cart page and assert 2 items in list
-    await assertCartQuantity(page, cartIconLink, quantityElement, itemsToCart)
+    // Navigate to shopping cart page and assert 2 items in list
+    await assertCartQuantity(page, cartIconLink, quantityElement, itemsToCart);
 
-  // Proceed to checkout and assert site URL and title
-    await assertCheckoutTitle(page, checkOut1URL)
+    // Proceed to checkout and assert site URL and title
+    await assertCheckoutTitle(page, checkOut1URL);
 
+    // //Fill required details
+    await fillDeliveryInfo(page, deliveryInfo);
 
-  // //Fill required details
-    await fillDeliveryInfo(page, deliveryInfo)
+    // //Proceed to overview page and assert site URL and title
+    await assertOverviewPage(page, checkOut2URL);
+    // //Proceed to final page, assert URL, title, header and text
 
-  // //Proceed to overview page and assert site URL and title
-    await assertOverviewPage(page, checkOut2URL)
-  // //Proceed to final page, assert URL, title, header and text
-    await assertFinalPage(page, finishURL)
+    await assertFinalPage(page, finishURL);
   });
 });

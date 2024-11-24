@@ -10,6 +10,7 @@ test.describe("negativeTests", () => {
       page,
     }) => {
       logIn(page, swagLabsURL, user.userName, user.password);
+      await page.waitForSelector(errorElement)
       await expect(page.locator(errorElement)).toContainText(/Epic sadface/);
     });
   }

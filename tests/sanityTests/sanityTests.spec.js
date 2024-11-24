@@ -2,67 +2,56 @@ import { expect, test } from "@playwright/test";
 import {
   swagLabsURL,
   inventoryURL,
-  bagLink,
-  jacketLink,
+  itemTitleLink,
   cartBadge,
   bagToCart,
   jacketToCart,
   cartIconLink,
   itemQuantity,
-  stepOneURL,
-  stepTwoURL,
+  checkOut2URL,
   finishURL,
   thankYouText,
   orderDispatch,
+  itemsToCart,
+  quantityElement,
+  checkOut1URL,
+  deliveryInfo,
 } from "../Variables";
 
+import { firstLogin, assertInventoryURL, verifyProductName, addItemsToCart, assertCartBadge, assertCartQuantity, assertCheckoutTitle, fillDeliveryInfo, assertOverviewPage, assertFinalPage } from "../Helpers";
+
 test.describe("sanityTest", () => {
-    
-  test("endToEnd", async ({ page }) => {
+
+  test("End to end purchasing process", async ({ page }) => {
 
   //Navigate to site and log in using valid credentials
-    await page.goto(swagLabsURL);
-    await page.locator("#user-name").fill("standard_user");
-    await page.locator("#password").fill("secret_sauce");
-    await page.locator("#login-button").click();
+    await firstLogin(page, swagLabsURL)
 
   //Assert site URL after log in
-    await expect(page).toHaveURL(inventoryURL);
-    await expect(page.locator(".app_logo")).toHaveText("Swag Labs");
+    await assertInventoryURL(page, inventoryURL)
 
-  //Add backpack and jacket to shopping cart and assert their names
-    await page.locator(bagToCart).click();
-    await expect(page.locator(bagLink)).toContainText("Sauce Labs Backpack");
-    await page.locator(jacketToCart).click();
-    await expect(page.locator(jacketLink)).toContainText("Sauce Labs Fleece Jacket");
+  //Assert products name
+    await verifyProductName(page, itemTitleLink)
 
-  //Assert cart badge represents number of items added
-    await expect(page.locator(cartBadge)).toContainText("2");
-  
-  //Navigate to shopping cart page and assert 2 items in list
-    await page.locator(cartIconLink).click();
-    await expect(page.locator(itemQuantity)).toHaveCount(2);
+  // Add backpack and jacket to shopping cart and assert their names
+    await addItemsToCart(page, itemsToCart)
 
-  //Proceed to checkout and assert site URL and title
-    await page.locator("#checkout").click();
-    await expect(page).toHaveURL(stepOneURL);
-    await expect(page.locator(".title")).toHaveText("Checkout: Your Information");
+  // Assert cart badge represents number of items added
+    await assertCartBadge(page, cartBadge)
 
-  //Fill required details
-    await page.locator("#first-name").fill("tal");
-    await page.locator("#last-name").fill("baruchi");
-    await page.locator("#postal-code").fill("2220325");
+  // Navigate to shopping cart page and assert 2 items in list
+    await assertCartQuantity(page, cartIconLink, quantityElement, itemsToCart)
 
-  //Proceed to overview page and assert site URL and title
-    await page.locator("#continue").click();
-    await expect(page).toHaveURL(stepTwoURL);
-    await expect(page.locator(".title")).toHaveText("Checkout: Overview");
-  
-  //Proceed to final page, assert URL, title, header and text
-    await page.locator("#finish").click();
-    await expect(page).toHaveURL(finishURL);
-    await expect(page.locator(".title")).toHaveText("Checkout: Complete!");
-    await expect(page.locator(".complete-header")).toHaveText(thankYouText);
-    await expect(page.locator(".complete-text")).toHaveText(orderDispatch);
+  // Proceed to checkout and assert site URL and title
+    await assertCheckoutTitle(page, checkOut1URL)
+
+
+  // //Fill required details
+    await fillDeliveryInfo(page, deliveryInfo)
+
+  // //Proceed to overview page and assert site URL and title
+    await assertOverviewPage(page, checkOut2URL)
+  // //Proceed to final page, assert URL, title, header and text
+    await assertFinalPage(page, finishURL)
   });
 });

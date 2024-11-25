@@ -9,7 +9,7 @@ import { logIn } from "../utils/testActions";
 
 test.describe("positiveTests", () => {
   for (let username of usernameList) {
-    test(`Validiate userdata logins:${username}, ${password}`, async ({
+    test(`Validate userdata logins:${username}, ${password}`, async ({
       page,
     }) => {
       await logIn(page, swagLabsURL, username, password);

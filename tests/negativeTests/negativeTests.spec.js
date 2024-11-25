@@ -10,7 +10,7 @@ test.describe("negativeTests", () => {
       page,
     }) => {
       logIn(page, swagLabsURL, user.userName, user.password);
-      await page.waitForSelector(errorElement)
+      await page.waitForSelector(errorElement) // what is the point to wait for a selector to appear in the DOM if you assert the text appearance of the same locator?
       await expect(page.locator(errorElement)).toContainText(/Epic sadface/);
     });
   }

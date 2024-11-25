@@ -1,7 +1,7 @@
-export async function logIn(page, swagLabsURL, userData, passWord) {
+export async function logIn(page, swagLabsURL, userData, password) {
     await page.goto(swagLabsURL);
     await fillInfo(page, '#user-name', userData)
-    await fillInfo(page, '#password', passWord)
+    await fillInfo(page, '#password', password)
     await page.locator("#login-button").click();
   }
 

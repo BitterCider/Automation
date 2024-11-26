@@ -2,20 +2,15 @@ import {test} from '@playwright/test'
 import {
     swagLabsURL,
     inventoryURL,
-    itemTitleLink,
-    cartBadge,
-    cartIconLink,
+    cartURL,
     checkOut2URL,
     finishURL,
-    itemsToCart,
-    quantityElement,
     checkOut1URL,
     deliveryInfo,
     usernameList,
     password,
-    finishedOrder,
 } from '../utils/testData'
-
+import { itemTitleLink ,finishedOrder, cartTitle, cartBadge, itemsToCart, cartIconLink, quantityElement  } from '../utils/htmlElements'
 import {
     assertInventoryURL,
     verifyProductName,
@@ -26,6 +21,7 @@ import {
     fillDeliveryInfo,
     assertOverviewPage,
     assertFinalPage,
+    assertCartPage,
 } from '../utils/Helpers'
 
 import {logIn} from '../utils/testActions'
@@ -35,7 +31,7 @@ test.describe('sanityTest', () => {
         await logIn(page, swagLabsURL, usernameList[0], password)
     })
 
-    test('End to end purchasing process', async ({page}) => {
+    test('End to end purchasing process', async ({page}) => { 
         //Assert site URL after log in
         await assertInventoryURL(page, inventoryURL)
 
@@ -48,24 +44,27 @@ test.describe('sanityTest', () => {
         // Assert cart badge represents number of items added
         await assertCartBadge(page, cartBadge)
 
-        // Navigate to shopping cart page and assert 2 items in list
+        // Navigate to cart page and assert URL and Title
+        await assertCartPage(page, cartURL, cartTitle, cartIconLink)    // added this - did you mean cart title and url?
+
+        // Assert 2 items in shopping cart list
         await assertCartQuantity(
             page,
-            cartIconLink,
             quantityElement,
             itemsToCart,
         )
-
+    
         // Proceed to checkout and assert site URL and title
         await assertCheckoutTitle(page, checkOut1URL)
         // You missed the cart item assertion in the checkout page - check project assignment presentation - page 13
-        // //Fill required details
+        
+        //Fill required details
         await fillDeliveryInfo(page, deliveryInfo)
 
-        // //Proceed to overview page and assert site URL and title
+        //Proceed to overview page and assert site URL and title
         await assertOverviewPage(page, checkOut2URL)
-        //     // //Proceed to final page, assert URL, title, header and text
 
+        //Proceed to final page, assert URL, title, header and text
         await assertFinalPage(page, finishURL, finishedOrder)
     })
 })

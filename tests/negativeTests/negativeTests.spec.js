@@ -4,7 +4,7 @@ import { swagLabsURL, userObjects } from "../utils/testData";
 import { logIn } from "../utils/testActions";
 
 test.describe("negativeTests", () => {
-  for (let user of userObjects) {
+  userObjects.forEach((user) => {
     test(`Invalid Userdata logins: ${
       user.userName === "" ? "Empty username" : user.userName
     }, ${user.password === "" ? "Empty password" : user.password}`, async ({
@@ -13,5 +13,5 @@ test.describe("negativeTests", () => {
       logIn(page, swagLabsURL, user.userName, user.password);
       await expect(page.locator(errorElement)).toContainText(/Epic sadface/);
     });
-  }
+  })
 });

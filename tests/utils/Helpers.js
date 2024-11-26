@@ -24,18 +24,14 @@ export async function assertCartBadge(page, cartBadge) {
   await expectText(page, cartBadge, itemsToCart.length.toString());
 }
 
-export async function assertCartQuantity(
-  page,
-  itemLocator,
-  itemList
-) {
+export async function assertCartQuantity(page, itemLocator, itemList) {
   await expect(page.locator(itemLocator)).toHaveCount(itemList.length);
 }
 
-export async function assertCartPage(page, cartURL, cartTitle, cartIcon){
+export async function assertCartPage(page, cartURL, cartTitle, cartIcon) {
   await mouseClick(page, cartIcon);
-  await expectURL(page, cartURL)
-  await expectText(page, cartTitle, "Your Cart" )
+  await expectURL(page, cartURL);
+  await expectText(page, cartTitle, "Your Cart");
 }
 
 export async function assertCheckoutTitle(page, URL) {

@@ -1,12 +1,10 @@
 //URL Assertions:
 export const swagLabsURL = "https://www.saucedemo.com/";
 export const inventoryURL = "https://www.saucedemo.com/inventory.html";
-export const cartURL = "https://www.saucedemo.com/cart.html"
+export const cartURL = "https://www.saucedemo.com/cart.html";
 export const checkOut1URL = "https://www.saucedemo.com/checkout-step-one.html";
 export const checkOut2URL = "https://www.saucedemo.com/checkout-step-two.html";
 export const finishURL = "https://www.saucedemo.com/checkout-complete.html";
-
-//Text Assertions
 
 //Login parameters:
 export const deliveryInfo = [

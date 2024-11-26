@@ -8,12 +8,12 @@ import {
 import { logIn } from "../utils/testActions";
 
 test.describe("positiveTests", () => {
-  for (let username of usernameList) {
+  usernameList.forEach((username) => {
     test(`Validate userdata logins:${username}, ${password}`, async ({
       page,
     }) => {
       await logIn(page, swagLabsURL, username, password);
       await expect(page).toHaveURL(inventoryURL);
     });
-  }
+  });
 });

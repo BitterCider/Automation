@@ -1,0 +1,10 @@
+{
+  "prettier.printWidth": 250, // Max line width before wrapping
+  "prettier.tabWidth": 2, // Number of spaces per tab
+  "prettier.useTabs": false, // Use spaces instead of tabs
+  "prettier.semi": true, // Add semicolons at the end of statements
+  "prettier.singleQuote": true, // Use single quotes instead of double
+  "prettier.trailingComma": "es5", // Add trailing commas where valid in ES5
+  "prettier.bracketSpacing": true, // Print spaces between brackets
+  "prettier.arrowParens": "always" // Include parentheses around a single arrow function parameter
+}
